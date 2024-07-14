@@ -22,7 +22,7 @@ def generate_code(length):
 
 
 @app.route("/rooms", methods=["POST", "GET"])
-def rooms():
+def join():
     if request.method == "POST":
         name = request.form.get("name")
         code = request.form.get("code")
@@ -36,7 +36,7 @@ def rooms():
         
         room = code
         if create != False:
-            room = generate_code(9)
+            room = generate_code(4)
             rooms[room] = {"members": 0, "messages": []}
         elif code not in rooms:
             return render_template("rooms.html", error="The room does not exist", code=code, name=name)
@@ -48,7 +48,13 @@ def rooms():
 
     return render_template("rooms.html")
 
+@app.route("/room")
+def room():
+    room = session.get("room")
+    if room is None or session.get("name") is None or room not in rooms:
+        return redirect(url_for("join"))
 
+    return render_template("room.html")
 
 
 
