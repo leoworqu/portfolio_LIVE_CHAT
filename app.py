@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, render_template, request, session, redirect, url_for
 from flask_socketio import SocketIO, join_room, leave_room, send
 import random
 from string import ascii_uppercase
@@ -6,6 +6,19 @@ from string import ascii_uppercase
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "RADNOM"
 socketIO = SocketIO(app)
+
+rooms = {}
+
+def generate_code(length):
+    while True:
+        code = ""
+        for _ in range(length):
+            code += random.choice(ascii_uppercase)
+
+        if code not in rooms:
+            break
+    return code
+
 
 
 @app.route("/rooms", methods=["POST", "GET"])
@@ -17,13 +30,23 @@ def rooms():
         create = request.form.get("create", False)
 
         if not name:
-            return render_template("rooms.html", error="Please enter a name")
+            return render_template("rooms.html", error="Please enter a name", code=code, name=name)
         if join != False and not code:
-            return render_template("rooms.html", error="Please enter a room code")
+            return render_template("rooms.html", error="Please enter a room code", code=code, name=name)
+        
+        room = code
+        if create != False:
+            room = generate_code(9)
+            rooms[room] = {"members": 0, "messages": []}
+        elif code not in rooms:
+            return render_template("rooms.html", error="The room does not exist", code=code, name=name)
+        
+        session["name"] = name
+        session["room"] = room
 
+        return redirect(url_for("room"))
 
     return render_template("rooms.html")
-
 
 
 
