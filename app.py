@@ -36,7 +36,7 @@ def join():
         
         room = code
         if create != False:
-            room = generate_code(4)
+            room = generate_code(9)
             rooms[room] = {"members": 0, "messages": []}
         elif code not in rooms:
             return render_template("rooms.html", error="The room does not exist", code=code, name=name)
@@ -53,9 +53,53 @@ def room():
     room = session.get("room")
     if room is None or session.get("name") is None or room not in rooms:
         return redirect(url_for("join"))
+    return render_template("room.html", room=room, messages=rooms[room]["messages"])
 
-    return render_template("room.html")
 
+
+@socketIO.on("message")
+def message(data):
+    room = session.get("room")
+    if room not in rooms:
+        return 
+    
+    content = {
+        "name": session.get("name"),
+        "message": data["data"]
+    }
+    send(content, to=room)
+    rooms[room]["messages"].append(content)
+    print(f"{session.get('name')} said: {data['data']}")
+
+@socketIO.on("connect")
+def connect(auth):
+    room = session.get("room")
+    name = session.get("name")
+
+    if not room or not name:
+        return
+    if room not in rooms:
+        leave_room(room)
+        return
+    
+    join_room(room)
+    send({"name":name, "message": " has entered the room!"}, to=room)
+    rooms[room]["members"]+=1
+    print(f"{name} joined room {room}")
+
+@socketIO.on("disconnect")
+def disconnect():
+    room = session.get("room")
+    name = session.get("name")
+    leave_room(room)
+
+    if room in rooms:
+        rooms[room]["members"] -= 1
+        if rooms[room]["members"] <= 0:
+            del rooms[room]
+    
+    send({"name": name, "message": "has left the room"}, to=room)
+    print(f"{name} has left the room {room}")
 
 
 if __name__ == "__main__":
