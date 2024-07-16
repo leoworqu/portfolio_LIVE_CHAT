@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block navmenu %}
+  {% if current_user.is_authenticated %}
+      <div class="menu">
+        <a href="{{url_for('logout')}}"><button class="button1">Log Out</button></a>
+      </div>
+  {% else %}
+      <div class="menu">
+        <a href="{{url_for('login')}}"><button class="button">Log in</button></a>
+        <a href="{{ url_for('register') }}"><button class="button1">Sign up</button></a>
+      </div>
+  {% endif %}
+{% endblock navmenu %}
+
+
+{% block content %}
+{% if current_user.is_authenticated %}
+  {% include "services.html" %}
+
+{% else %}
+    <div class="hero">
+      <h1>CONNECT, <br>FIND THE RIGHT SERVICE<br> with<br> MUYA APP</h1>
+      <a href="{{url_for('register')}}"><button class="button1">GET STARTED</button></a>
+    </div>
+
+    <h1 class="section-title">FEATURES</h1>
+    <section class="features-section">
+      
+      <div class="features-grid">
+          
+          <div class="feature-item">
+              <img class="feature-image" src="{{ url_for('static', filename='feature1.png') }}" alt="Feature 1">
+              <div class="features-text">
+                <h3 class="feature-title">Location Based Service Finder</h3>
+                <p class="feature-description">Receive instant notifications whenever a new task is 
+                  assigned or completed, keeping you updated on project progress.</p>
+              </div>
+          </div>
+          <div class="feature-item">
+              <div class="features-text">
+                <h3 class="feature-title">Seamless Collaboration</h3>
+                <p class="feature-description">Collaborate effortlessly with your providers in real-time,
+                  sharing messages, feedback, and updates without any hassle.</p>
+              </div>
+              <img class="feature-image" src="{{ url_for('static', filename='feature2.webp') }}" alt="Feature 2">
+          </div>
+          <div class="feature-item">
+              <img class="feature-image" src="{{ url_for('static', filename='feature1.jpg') }}" alt="Feature 3">
+              <div class="features-text">
+                <h3 class="feature-title">Customizable Workflows</h3>
+                <p class="feature-description">Create and customize workflows tailored to your team's specific needs,
+                  ensuring efficient task management and productivity.</p>
+                </div>
+          </div>
+      </div>
+    </section>
+
+  <section class="about-section">
+    <div class="container">
+        <h2 class="section-title">About Us</h2>
+        <div class="about-description">
+            <p>
+              My project was inspired by my passion for solving real-world problems and 
+              creating impactful solutions. It all began when we i the need for a more efficient 
+              to find people for hire for jobs that require small amount of time. As a developer, 
+              i embarked on this journey to develop a tool that not only streamlines service for hire 
+              but also fosters seamless collaboration and productivity between Service Seeker and Provider.</p>
+            <p>
+              This project is a culmination of weeks of dedication and hard learning, to make a difference.
+              It's not just a project; it's a testament to my commitment and learning progress at the ALX programme
+              to strive for excellence.</p>
+            <p>
+              This project is part of my Portfolio for Alx Software Engineering Programme.
+              you can view my profile and the repository below</p>
+        </div>
+        <div class="team-members">
+            <ul>
+                <li><a href="https://et.linkedin.com/in/leul-h-worku-b670a0279" target="_blank">LinkedIn</a></li>
+                <li><a href="https://github.com/leoworqu" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+        <div class="github-link">
+            <a href="https://github.com/leoworqu/muya_webapp" class="button1" target="_blank">View Project on GitHub</a>
+        </div>
+    </div>
+  </section>
+{% endif %}
+
+{% endblock content %}
+
