@@ -27,12 +27,12 @@
     margin-top: 30px;
     width: 360px;
     height: 45px;
-    box-shadow: 0 4px 0 rgba(255, 0, 0, 0.5);
+    box-shadow: 0 4px 0 #6a5abd;
     border-radius: 30px;
   }
   
   .hero .button1:active {
-    box-shadow: 0 0 0 rgba(255, 0, 0, 0.2);
+    box-shadow: 0 0 0 #6a5acd;
     transform: translateY(3px);
     color: white; 
   }

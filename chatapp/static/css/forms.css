@@ -37,8 +37,8 @@
 
 .submit {
     width: 100%;
-    background-color: #C12929;
-    box-shadow: 0 4px 0 rgba(255, 0, 0, 0.2);
+    background-color: #6a5acd;
+    box-shadow: 0 4px 0 #6a5abd;
     color: #fff;
     padding: 10px;
     border: none;
@@ -48,12 +48,12 @@
   }
 
 .submit:hover {
-    background-color: #740f0f;
+    background-color: #6a5acd;
 }
 
 .submit:active {
-    background-color: #740f0f;
-    box-shadow: 0 0 0 rgba(255, 0, 0, 0.2);
+    background-color: #6a5acd;
+    box-shadow: 0 0 0 #6a5abd;
     transform: translateY(3px);
 }
 

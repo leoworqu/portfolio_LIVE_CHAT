@@ -40,10 +40,10 @@ body {
 
 
 .button {
-  box-shadow: 0 4px 0 rgba(255, 0, 0, 0.2);
-  border: 2px solid rgba(255, 0, 0, 0.2);
+  box-shadow: 0 4px 0 #6a5add;
+  border: 2px solid #6a5add;
   background-color: white;
-  color: #C12929;
+  color: #6a5acd;
   padding: 10px 20px; 
   cursor: pointer;
   transition: ease-in;
@@ -51,12 +51,12 @@ body {
 
 .button:active {
   transform: translateY(3px);
-  box-shadow: 0 0 0 rgba(255, 0, 0, 0.2);
+  box-shadow: 0 0 0 #6a5add;
 }
 
 .button1 {
-  box-shadow: 0 4px 0 rgba(255, 0, 0, 0.2);
-  background-color: #C12929; 
+  box-shadow: 0 4px 0 #6a5add;
+  background-color: #6a5acd; 
   color: white;
   padding: 10px 20px; 
   border: none; 
@@ -65,7 +65,7 @@ body {
 }
 
 .button1:active {
-  box-shadow: 0 0 0 rgba(255, 0, 0, 0.2);
+  box-shadow: 0 0 0 #6a5add;
   transform: translateY(3px);
   color: white; 
 }
@@ -83,12 +83,12 @@ footer {
   width: 100%;
   background-color: #ffffff;
   height: 60px;
-  border-top: 1px solid #C12929;
-  border-bottom: 1px solid #C12929;
+  border-top: 1px solid #6a5acd;
+  border-bottom: 1px solid #6a5acd;
   display: grid;
   justify-content: center;
   align-items: center;
-  color: #C12929;
+  color: #6a5acd;
 }
 
 footer p{
