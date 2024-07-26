@@ -15,7 +15,7 @@ To get started, you need to install the necessary dependencies. This project use
 
 
 Architecture
-The Flask Live Chat App follows a typical MVC (Model-View-Controller) architecture with the following components:
+The Flask Live Chat App follows a typical architecture with the following components:
 
     Backend
         Flask: The main web framework used to handle routing, request processing, and server-side logic.
