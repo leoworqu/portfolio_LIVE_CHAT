@@ -34,17 +34,28 @@ Here's a brief overview of the project's folder structure:
 
 PORTFOLIO_LIVE_CHAT/
 │
+
 ├── chatapp/
+
 │   ├── __init__.py          # Initializes the Flask app and sets up configurations
+
 │   ├── models.py            # Database models
+
 │   ├── routes.py            # Routes and view functions
+
 │   ├── forms.py             # Forms used in the application
+
 │   ├── static/              # Static files (CSS, JS, images)
+
 │   └── templates/           # HTML templates
+
 │
 |── app.py                   # Entry point
+
 ├── requirements.txt         # List of dependencies
+
 └── README.md                # This file
+
 
 
 Thank you for checking out the Flask Live Chat App! We hope you find it useful and enjoyable. If you have any questions or need further assistance, feel free to reach out. Happy chatting!
