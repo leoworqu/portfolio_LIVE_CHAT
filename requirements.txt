@@ -2,7 +2,6 @@ flask
 flask-sqlalchemy
 flask-wtf
 flask-login
-pillow
 flask_bcrypt
 email-validator
 gunicorn

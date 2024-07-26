@@ -36,7 +36,7 @@
 
 {% else %}
     <div class="hero">
-      <h1>CONNECT, <br>FIND THE RIGHT SERVICE<br> with<br> MUYA APP</h1>
+      <h1>CONNECT LIVE and<br> CHAT</h1>
       <a href="{{url_for('register')}}"><button class="button1">GET STARTED</button></a>
     </div>
 
@@ -48,26 +48,18 @@
           <div class="feature-item">
               <img class="feature-image" src="{{ url_for('static', filename='feature1.png') }}" alt="Feature 1">
               <div class="features-text">
-                <h3 class="feature-title">Location Based Service Finder</h3>
-                <p class="feature-description">Receive instant notifications whenever a new task is 
-                  assigned or completed, keeping you updated on project progress.</p>
+                <h3 class="feature-title">Seamless chating experience with socketio</h3>
+                <p class="feature-description">Receive instant notifications whenever a new message is 
+                  sent</p>
               </div>
           </div>
           <div class="feature-item">
               <div class="features-text">
-                <h3 class="feature-title">Seamless Collaboration</h3>
-                <p class="feature-description">Collaborate effortlessly with your providers in real-time,
-                  sharing messages, feedback, and updates without any hassle.</p>
+                <h3 class="feature-title">Keeps chat logs with session managment</h3>
+                <p class="feature-description">Keeps track of the live chat until all members that are
+                  sharing messages, feedback, leave</p>
               </div>
               <img class="feature-image" src="{{ url_for('static', filename='feature2.webp') }}" alt="Feature 2">
-          </div>
-          <div class="feature-item">
-              <img class="feature-image" src="{{ url_for('static', filename='feature1.jpg') }}" alt="Feature 3">
-              <div class="features-text">
-                <h3 class="feature-title">Customizable Workflows</h3>
-                <p class="feature-description">Create and customize workflows tailored to your team's specific needs,
-                  ensuring efficient task management and productivity.</p>
-                </div>
           </div>
       </div>
     </section>
