@@ -4,3 +4,4 @@ flask-wtf
 flask-login
 flask_bcrypt
 email-validator
+flask-socketio

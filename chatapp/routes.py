@@ -134,26 +134,28 @@ def disconnect():
 # Route for the home page
 @app.route("/", methods=["POST", "GET"])
 def index():
-    if request.method == "POST":
-        name = request.form.get("name")
-        code = request.form.get("code")
-        join = request.form.get("join", False)
-        create = request.form.get("create", False)
+    if current_user.is_authenticated:
+        user = User.query.filter_by(username=current_user.username).first()
+        name = user.username
+        if request.method == "POST":
+            code = request.form.get("code")
+            join = request.form.get("join", False)
+            create = request.form.get("create", False)
 
-        if not name:
-            return render_template("home.html", error="Please enter a name", code=code, name=name)
-        if join != False and not code:
-            return render_template("home.html", error="Please enter a room code", code=code, name=name)
-        
-        room = code
-        if create != False:
-            room = generate_code(9)
-            rooms[room] = {"members": 0, "messages": []}
-        elif code not in rooms:
-            return render_template("home.html", error="The room does not exist", code=code, name=name)
-        
-        session["name"] = name
-        session["room"] = room
+            if not name:
+                return render_template("home.html", error="Please enter a name", code=code, name=name)
+            if join != False and not code:
+                return render_template("home.html", error="Please enter a room code", code=code, name=name)
+            
+            room = code
+            if create != False:
+                room = generate_code(9)
+                rooms[room] = {"members": 0, "messages": []}
+            elif code not in rooms:
+                return render_template("home.html", error="The room does not exist", code=code, name=name)
+            
+            session["name"] = name
+            session["room"] = room
 
-        return redirect(url_for("room"))
+            return redirect(url_for("room"))
     return render_template("home.html")
