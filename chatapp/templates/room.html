@@ -15,11 +15,12 @@
 
     const messages = document.getElementById("messages");
 
-    const createMessage = (name, msg) => {
+    const createMessage = (name, msg, avatar) => {
         const content = `
         <div class="text">
-            <span>
-                <strong>${name}</strong>: ${msg}
+            <span class="span">
+                <img class="avatar_room" src="/static/avatars/${avatar}" alt="User Avatar">
+                <span><strong>${name}</strong>: ${msg}</span>
             </span>
             <span class="muted">
                 ${new Date().toLocaleString()}
@@ -30,7 +31,7 @@
     };
 
     socketio.on("message", (data) => {
-        createMessage(data.name, data.message);
+        createMessage(data.name, data.message, data.avatar);
     });
 
     const sendMessage = () => {
@@ -42,7 +43,7 @@
 </script>
 {% for msg in messages %}
     <script type="text/javascript">
-        createMessage("{{msg.name}}", "{{msg.message}}");
+        createMessage("{{msg.name}}", "{{msg.message}}", "{{ msg.avatar }}");
     </script>
 {% endfor %}
 {% endblock %}

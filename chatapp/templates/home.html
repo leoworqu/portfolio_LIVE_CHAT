@@ -20,8 +20,8 @@
   <form method="post">
     <h3>Enter a chat room</h3>
     <div class="label">
-        <label>Name:</label>
-        <label>{{name}}</label>
+        <img class="avatar_join" src="{{ url_for('static', filename='avatars/' + current_user.avatar) }}" alt="User Avatar">
+        <label name="{{ username }}" >{{name}}</label>
     </div>
     <div class="join">
         <input type="text" placeholder="Room Code" name="code" value="{{code}}">

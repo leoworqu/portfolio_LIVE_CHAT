@@ -19,7 +19,12 @@ def register():
     form = registrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        user = User(
+            username=form.username.data,
+            email=form.email.data,
+            password=hashed_password,
+            avatar=form.avatar.data
+        )
         existing_user = User.query.filter_by(username=form.username.data).first()
         existing_email = User.query.filter_by(email=form.email.data).first()
         if existing_user:
@@ -78,9 +83,10 @@ def generate_code(length):
 @app.route("/room")
 def room():
     room = session.get("room")
-    if room is None or session.get("name") is None or room not in rooms:
+    if room is None or room not in rooms:
         return redirect(url_for("join"))
-    return render_template("room.html", room=room, messages=rooms[room]["messages"])
+    messages=rooms[room]["messages"]
+    return render_template("room.html", room=room, messages=messages)
 
 
 
@@ -90,8 +96,10 @@ def message(data):
     if room not in rooms:
         return 
     
+    user = User.query.filter_by(username=current_user.username).first()
     content = {
-        "name": session.get("name"),
+        "name": user.username,
+        "avatar": user.avatar,
         "message": data["data"]
     }
     send(content, to=room)
@@ -100,8 +108,10 @@ def message(data):
 
 @socketIO.on("connect")
 def connect(auth):
+    user = User.query.filter_by(username=current_user.username).first()
     room = session.get("room")
-    name = session.get("name")
+    name = user.username
+    avatar = user.avatar
 
     if not room or not name:
         return
@@ -110,14 +120,16 @@ def connect(auth):
         return
     
     join_room(room)
-    send({"name":name, "message": " has entered the room!"}, to=room)
+    send({"avatar":avatar, "name":name, "message": " has entered the room!"}, to=room)
     rooms[room]["members"]+=1
     print(f"{name} joined room {room}")
 
 @socketIO.on("disconnect")
 def disconnect():
+    user = User.query.filter_by(username=current_user.username).first()
     room = session.get("room")
-    name = session.get("name")
+    name = user.username
+    avatar = user.avatar
     leave_room(room)
 
     if room in rooms:
@@ -125,7 +137,7 @@ def disconnect():
         if rooms[room]["members"] <= 0:
             del rooms[room]
     
-    send({"name": name, "message": "has left the room"}, to=room)
+    send({"avatar":avatar, "name": name, "message": "has left the room"}, to=room)
     print(f"{name} has left the room {room}")
 
 
@@ -134,9 +146,11 @@ def disconnect():
 # Route for the home page
 @app.route("/", methods=["POST", "GET"])
 def index():
+    name = None
     if current_user.is_authenticated:
         user = User.query.filter_by(username=current_user.username).first()
         name = user.username
+
         if request.method == "POST":
             code = request.form.get("code")
             join = request.form.get("join", False)
@@ -146,16 +160,17 @@ def index():
                 return render_template("home.html", error="Please enter a name", code=code, name=name)
             if join != False and not code:
                 return render_template("home.html", error="Please enter a room code", code=code, name=name)
-            
+
             room = code
             if create != False:
                 room = generate_code(9)
                 rooms[room] = {"members": 0, "messages": []}
             elif code not in rooms:
                 return render_template("home.html", error="The room does not exist", code=code, name=name)
-            
+
             session["name"] = name
             session["room"] = room
 
-            return redirect(url_for("room"))
-    return render_template("home.html")
+            return redirect(url_for("room", name=name))
+    return render_template("home.html" , name=name)
+
