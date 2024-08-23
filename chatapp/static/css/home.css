@@ -48,8 +48,8 @@
   }
   
   .feature-item {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    justify-content: center;
     grid-gap: 20px;
     background-color: #fff;
     border-radius: 8px;
@@ -57,12 +57,6 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
-  .feature-image {
-    max-width: 399px;
-    height: 300px;
-    border-radius: 8px;
-    object-fit: cover;
-  }
 
   .features-text{
     display: flex;
