@@ -79,7 +79,7 @@ def generate_code(length):
             break
     return code
 
-
+@login_required
 @app.route("/room")
 def room():
     room = session.get("room")
@@ -104,7 +104,6 @@ def message(data):
     }
     send(content, to=room)
     rooms[room]["messages"].append(content)
-    print(f"{session.get('name')} said: {data['data']}")
 
 @socketIO.on("connect")
 def connect(auth):
@@ -122,7 +121,6 @@ def connect(auth):
     join_room(room)
     send({"avatar":avatar, "name":name, "message": " has entered the room!"}, to=room)
     rooms[room]["members"]+=1
-    print(f"{name} joined room {room}")
 
 @socketIO.on("disconnect")
 def disconnect():
@@ -138,7 +136,6 @@ def disconnect():
             del rooms[room]
     
     send({"avatar":avatar, "name": name, "message": "has left the room"}, to=room)
-    print(f"{name} has left the room {room}")
 
 
 

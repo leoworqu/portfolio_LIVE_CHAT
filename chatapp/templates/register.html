@@ -8,10 +8,17 @@
             <legend class="legend">Register an account</legend>
             <div>
                 {{  form.username.label(class="") }}
-                {{  form.username(class="input") }}
-                {% for error in form.username.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
+                {% if form.username.errors %}
+                    {{  form.username(class="input") }}
+                    <div class="errors">
+                        {% for error in form.username.errors %}
+                            <span style="color: red;">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{  form.username(class="input") }}
+                {% endif %}
+                
             </div>
             <div>
                 {{  form.email.label(class="") }}
